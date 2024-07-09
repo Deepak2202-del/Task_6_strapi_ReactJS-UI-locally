@@ -1,0 +1,113 @@
+1. Local Deployment Setup:
+   - ReactJS UI: Deployed locally on your machine.
+   - Strapi API: Also deployed locally on your machine.
+
+2. Integration:
+   - ReactJS UI communicates with the Strapi API over HTTP requests.
+
+3. Local Environment:
+   - Both ReactJS UI and Strapi API run on localhost with different ports.
+
+ Steps to Deploy and Integrate
+
+ 1. Deploy Strapi Locally
+
+- Install Strapi globally if not already installed:
+  ```bash
+  npm install -g strapi@beta
+  ```
+
+- Create a new Strapi project (skip if already created):
+  ```bash
+  strapi new my-strapi-project
+  ```
+
+- Navigate to your Strapi project directory:
+  ```bash
+  cd my-strapi-project
+  ```
+
+- Start Strapi locally:
+  ```bash
+  npm run develop
+  ```
+  This will start Strapi server locally at `http://localhost:1337`.
+
+ 2. Deploy ReactJS UI Locally
+
+- Create a new React app (skip if already created):
+  ```bash
+  npx create-react-app my-react-app
+  ```
+
+- Navigate to your React app directory:
+  ```bash
+  cd my-react-app
+  ```
+
+- Replace the contents of `src/App.js` with code to fetch data from your Strapi API:
+  
+  ```javascript
+  import React, { useEffect, useState } from 'react';
+
+  function App() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+      fetchData();
+    }, []);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:1337/articles'); // Replace with your Strapi API endpoint
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const jsonData = await response.json();
+        setData(jsonData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    return (
+      <div>
+        <h1>Strapi Articles:</h1>
+        <ul>
+          {data.map(article => (
+            <li key={article.id}>{article.title}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+- Start the React development server:
+  ```bash
+  npm start
+  ```
+  This will start the React app locally at `http://localhost:3000`.
+
+ 3. Integration
+
+- Ensure your Strapi API endpoint in the React app matches the routes you've defined in your Strapi project (e.g., `http://localhost:1337/articles`).
+
+- Access your ReactJS UI at `http://localhost:3000` and verify that it successfully fetches and displays data from your local Strapi API.
+
+ Diagram
+
+Here's a simple diagram illustrating the setup:
+
+```
+     +----------------------+       +----------------------+
+     |                      |       |                      |
+     |   ReactJS UI         | <---> |   Strapi API          |
+     |   (http://localhost:3000) | (http://localhost:1337) |
+     |                      |       |                      |
+     +----------------------+       +----------------------+
+```
+
+ 
