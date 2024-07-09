@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "my_react_apps",
+  "info": {
+    "singularName": "my-react-app",
+    "pluralName": "my-react-apps",
+    "displayName": "My React App"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ContentfromStrapi": {
+      "type": "string"
+    }
+  }
+}
